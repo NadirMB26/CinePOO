@@ -1,0 +1,142 @@
+@startuml
+
+class Pelicula{
+    - String Id_Pelicula;
+    - String Titulo_Distribucion;
+    - String Titulo_Original;
+    - String Idiomas;
+    - String Subtitulos;
+    - String Pais_Origen;
+    - String A_Produccion;
+    - String Duracion;
+    - String Clasificacion;
+    - String Resumen_Pelicula;
+    - String Identificador;
+    - List<Participantes> Reparto;
+    - List<Comentario> Comentarios;
+}
+
+class Participantes{
+    - String Rol;
+    - String Nombre;
+    - String Apellido;
+    - String Nacionalidad;
+    - String Nombre_Artistico;
+    - List<Pelicula> Papeles_Interpretados;
+    - List<Pelicula> Peliculas_Dirigidas;
+    - List<Pelicula> Peliculas_Actuadas;
+}
+
+class Cine{
+    - String Link_pagina;
+    - String Nombre_Cine;
+    - String Telefono;
+    - String Gerente;
+    - Localidad Sector;
+    - List<Sala> Salas;
+    - Horario Horario_Cine;
+    - List<Usuario> Usuarios;
+    - List<Comentario> Comentarios;
+}
+
+class Localidad{
+    - String Pais;
+    - String Ciudad;
+    - String Sector_Ciudad;
+    - String Descripcion;
+}
+
+class Sala{
+    - String Id_sala;
+    - String Nombre_sala;
+    - String Tipo_Sala;
+    - Butaca Cantidad_Butacas;
+    - List<Funcion> Funciones;
+}
+
+class Butaca{
+    - String Numero_Butaca;
+    - String Fila_Pertenece;
+    - String Adicionales;
+    - Sala Id_Sala;
+}
+
+class Horario{
+    - String Hora_inicio;
+    - String Hora_Fin;
+    - String Dia_Semana;
+    - List<Funcion> Funciones;
+}
+
+class Usuario{
+    - String Nombre_Usuario;
+    - String Edad_usuario;
+    - Date Fecha_Registro;
+    - Localidad Sector;
+    - String Correo_Usuario;
+    - String Contra_Usuario;
+}
+
+class Comentario{
+    - String Id_Comentario;
+    - Usuario nombre;
+    - String Descripcion;
+    - String Calificacion;
+}
+
+class Tarifa{
+    - String Precio;
+    - Sala Tipo;
+    - Oferta ofertas;
+}
+
+class Oferta{
+    - Horario Dia_Semana;
+    - String Descripcion;
+    - String Descuentos;
+}
+
+class Tiquete{
+    - Usuario Usuarios;
+    - Tarifa Precio_Entrada;
+    - Funcion Pelicula_Actual;
+    - Sala Asientos_Usuario;
+}
+
+class Funcion{
+    - Horario Hora_Inicio;
+    - Sala Id_Sala;
+    - Pelicula Pelicula;
+    - String Tipo_Funcion;
+}
+
+class Cartelera{
+    - List<Pelicula> Peliculas;
+    - List<Horario> Horarios;
+    - Icon Imagen_Promocional;
+    - Horario Dia_Semana;
+}
+
+Pelicula "1" -- "*" Participantes : Tiene
+Pelicula "1" -- "*" Comentario : Recibe
+Sala "1" -- "1" Tarifa : Tiene
+Cine "1" -- "*" Sala : Contiene
+Cine "1" -- "*" Horario : Tiene
+Cine "1" -- "*" Cartelera : Muestra
+Cartelera "1" -- "*" Pelicula : Contiene
+Cartelera "1" -- "*" Horario : Tiene
+Sala "1" -- "*" Butaca : Contiene
+Sala "*" -- "1" Funcion : Tiene
+Funcion "1" -- "1" Pelicula : Exhibe
+Cine "1" -- "*" Tarifa : Ofrece
+Tarifa "*" -- "*" Oferta : Aplica
+Cine "1" -- "*" Tiquete : Vende
+Tiquete "1" -- "*" Sala : Incluye
+Funcion "1" -- "*" Horario : Tiene
+Oferta "1" -- "*" Horario : Incluye
+Comentario "*" -- "1" Pelicula : Asocia
+Participantes "1" -- "*" Localidad : De
+Cine"1" -- "*" Usuario :Tiene
+Usuario"1" -- "*"Comentario :hace
+Usuario"1" -- "1"Localidad :tiene
+@enduml
